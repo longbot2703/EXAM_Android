@@ -13,10 +13,11 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Button btnAdd, btnSearch;
-    EditText edUsername, edEmail, edPhone;
-    RadioGroup rgGender;
-    RadioButton rbMale, rbFemale;
+    private Button btnAdd, btnSearch;
+    private EditText edUsername, edEmail, edPhone;
+    private RadioGroup rgGender;
+    private RadioButton rbMale, rbFemale;
+    AppDatabase db;
 
 
 
@@ -24,6 +25,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
+        db = AppDatabase.getAppDatabase(this);
 
         edUsername = findViewById(R.id.edUsername);
         edEmail = findViewById(R.id.edEmail);
@@ -43,33 +46,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             onRegister();
         } else if (v == btnSearch) {
             onSearch();
+        } else {
+            return;
         }
     }
 
     private void onSearch() {
         Intent intent = new Intent(this,SearchActivity.class);
         startActivity(intent);
+
     }
 
     private void onRegister() {
         if (edUsername.getText().toString().isEmpty()) {
             Toast.makeText(this,"Please enter Customer Name", Toast.LENGTH_LONG).show();
             return;
-        }
-
-        if (edEmail.getText().toString().isEmpty()) {
+        } else if (edEmail.getText().toString().isEmpty()) {
             Toast.makeText(this,"Please enter Email Address", Toast.LENGTH_LONG).show();
             return;
-        }
-
-        if (edPhone.getText().toString().isEmpty()) {
+        } else if (edPhone.getText().toString().isEmpty()) {
             Toast.makeText(this,"Please enter Phone Number", Toast.LENGTH_LONG).show();
             return;
-        }
-
-        if (rgGender.getCheckedRadioButtonId() == -1){
+        } else if (rgGender.getCheckedRadioButtonId() == -1){
             Toast.makeText(this,"Please select Gender", Toast.LENGTH_LONG).show();
             return;
+        } else {
+            insertUser();
         }
+    }
+
+    private void insertUser() {
+        UserEntity us = new UserEntity();
+        us.username = edUsername.getText().toString();
+        us.email = edEmail.getText().toString();
+        us.phone = edPhone.getText().toString();
+        us.gender = rgGender.getCheckedRadioButtonId();
+        db.userDao().insertUser(us);
     }
 }

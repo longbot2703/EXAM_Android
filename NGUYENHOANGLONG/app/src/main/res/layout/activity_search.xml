@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:text="Search"
             android:textColor="@color/black"
-            android:background="#8E8C8C"/>
+            android:backgroundTint="#8E8C8C"/>
 
     </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView

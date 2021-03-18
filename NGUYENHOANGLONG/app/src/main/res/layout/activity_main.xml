@@ -126,7 +126,7 @@
             android:layout_weight="5"
             android:text="Add Customer"
             android:textColor="@color/black"
-            android:background="#8E8C8C"/>
+            android:backgroundTint="#8E8C8C"/>
         <Button
             android:id="@+id/btnSearch"
             android:layout_width="0dp"
@@ -135,7 +135,7 @@
             android:layout_margin="10dp"
             android:text="Search Customer"
             android:textColor="@color/black"
-            android:background="#8E8C8C"/>
+            android:backgroundTint="#8E8C8C"/>
     </LinearLayout>
 
 
